@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My Project</title>
+    <style>
+        /* Basic styling for the page */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+            min-height: 100vh; /* Full height of the viewport */
+            margin: 0;
+            background-color: #f0f2f5; /* Light grey background */
+            color: #333;
+            text-align: center;
+        }
+
+        /* Styling for the main header */
+        h1 {
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            color: #2c3e50;
+        }
+
+        /* Styling for the central button */
+        .main-button {
+            /* Make it a big, inline block */
+            display: inline-block;
+            padding: 25px 50px;
+            
+            /* Typography */
+            font-size: 1.6em;
+            font-weight: bold;
+            text-decoration: none; /* Remove underline */
+            color: white; 
+            
+            /* Appearance */
+            background-color: #27ae60; /* Primary color (Green) */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            
+            /* Animation/Effect */
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hover effect */
+        .main-button:hover {
+            background-color: #2ecc71; /* Lighter green on hover */
+            transform: translateY(-2px);
+        }
+
+        /* Active effect (when clicked) */
+        .main-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer/small text */
+        .footer-text {
+            margin-top: 50px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My GitHub Project!</h1>
+
+    <a href="https://drive.google.com/file/d/1TF0XHMVjryS41FZJ2pZ0X2BXHaAKlmsL/view?usp=sharing"
+       class="main-button"
+       target="_blank"
+       rel="noopener noreferrer">
+        CLICK HERE TO ACCESS THE RESOURCE
+    </a>
+
+    <p class="footer-text">This landing page is hosted via GitHub Pages.</p>
+</body>
+</html>
