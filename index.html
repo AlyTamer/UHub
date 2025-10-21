@@ -3,100 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UHUB for Android</title>
+    <title>UHub for Android</title>
     <style>
-        /* Basic styling for the page */
         body {
-            font-family: 'Inter', sans-serif; /* Using Inter font for a modern look */
+            font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Center vertically */
-            align-items: center; /* Center horizontally */
-            min-height: 100vh; /* Full height of the viewport */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             margin: 0;
-            background-color: #000000; /* Deepest Black Background */
-            color: #E0E0E0; /* Light Gray Text Color */
+            background-color: #000000;
+            color: #E0E0E0;
             text-align: center;
-            overflow: hidden; /* Prevent body scroll due to background effect */
+            overflow: hidden;
         }
 
-        /* Subtle Flowing Waves Background Effect - ENHANCED for better visibility */
+        /* Brighter, more vivid blue-purple waves */
         #background-waves {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Keep it behind all content */
-            opacity: 0.4; /* Increased visibility for the waves */
-            /* Using a combination of radial and linear gradients for complexity and depth */
-            background: 
-                /* Darker, more visible purple wave */
-                radial-gradient(circle at 70% 30%, rgba(90, 0, 150, 0.6) 1%, transparent 20%), 
-                /* More muted red wave for harmony */
-                radial-gradient(circle at 20% 80%, rgba(150, 0, 0, 0.5) 1%, transparent 20%), 
-                linear-gradient(150deg, #0a0a0a, #000000, #050505); /* Dark gradient for depth */
-            background-size: 300% 300%; /* Larger area for slow, subtle movement */
-            animation: flowWaves 25s linear infinite; 
+            z-index: -1;
+            opacity: 0.6; /* more visible */
+            background:
+                radial-gradient(circle at 70% 30%, rgba(115, 0, 255, 0.8) 5%, transparent 25%), /* bright purple */
+                radial-gradient(circle at 30% 80%, rgba(0, 100, 255, 0.7) 5%, transparent 25%), /* electric blue */
+                radial-gradient(circle at 80% 60%, rgba(0, 200, 255, 0.6) 5%, transparent 25%), /* cyan highlight */
+                linear-gradient(160deg, #0a0a0a, #000000, #050505);
+            background-size: 400% 400%;
+            animation: flowWaves 30s ease-in-out infinite;
         }
 
-        /* Keyframes for the slow wave movement */
         @keyframes flowWaves {
             0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; } 
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 100%; }
         }
 
-        /* Styling for the main header with linear gradient text */
+        /* Larger, glowing UHub title */
         h1 {
-            margin-bottom: 40px;
-            font-size: 3.5em; /* Slightly larger for impact */
-            letter-spacing: 2px; /* Reduced spacing */
-            
-            /* Linear Gradient Text Effect (Purple -> Pink -> Blue -> Red) */
-            background: linear-gradient(135deg, #6200EE, #FF4081, #2196F3, #F44336);
-            -webkit-background-clip: text; /* Clip background to text shape */
-            -webkit-text-fill-color: transparent; /* Hide text color, show background */
-            background-clip: text; /* Standard CSS for non-webkit */
-            color: #BB86FC; /* Fallback color */
+            margin-bottom: 50px;
+            font-size: 5em; /* larger title */
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #7B00FF, #6E00FF, #00B2FF, #7C4DFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(123, 0, 255, 0.4);
         }
 
-        /* Styling for the central button */
         .main-button {
             display: inline-block;
             padding: 25px 50px;
-            
-            /* Typography */
             font-size: 1.6em;
             font-weight: bold;
             text-decoration: none; 
             color: white; 
-            
-            /* Appearance - PURPLE */
-            background-color: #6200EE; /* Primary Purple */
+            background-color: #7B00FF;
             border: none;
             border-radius: 12px; 
             cursor: pointer;
-            
-            /* Animation/Effect */
             transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
-            box-shadow: 0 8px 15px rgba(187, 134, 252, 0.3); /* Purple Glow Shadow */
-            z-index: 1; /* Bring button above background element */
+            box-shadow: 0 8px 15px rgba(123, 0, 255, 0.3);
+            z-index: 1;
         }
 
-        /* Hover effect */
         .main-button:hover {
-            background-color: #9857FF; /* Lighter purple on hover */
-            transform: translateY(-3px); /* Lift a little higher */
-            box-shadow: 0 10px 20px rgba(187, 134, 252, 0.5);
+            background-color: #9857FF;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(123, 0, 255, 0.5);
         }
 
-        /* Active effect (when clicked) */
         .main-button:active {
             transform: translateY(0);
-            box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
+            box-shadow: 0 4px 8px rgba(123, 0, 255, 0.2);
         }
-        
-        /* Container for all footer text */
+
         .footer-container {
             margin-top: 50px;
             color: #888888; 
@@ -104,12 +89,8 @@
             font-weight: 500;
         }
 
-        /* Made By text */
-        .footer-text {
-             margin: 0;
-        }
+        .footer-text { margin: 0; }
 
-        /* Contact me link styling */
         .contact-text {
             margin-top: 10px;
             font-size: 0.9em;
@@ -117,7 +98,7 @@
         }
 
         .contact-link {
-            color: #BB86FC; /* Match the purple accent */
+            color: #BB86FC;
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -127,7 +108,6 @@
             text-decoration: underline;
         }
 
-        /* New style for the disclaimer text */
         .disclaimer-text {
             margin-top: 5px; 
             font-size: 0.8em; 
@@ -136,26 +116,23 @@
     </style>
 </head>
 <body>
-    <!-- Background Waves element --><div id="background-waves"></div>
-
-    <!-- Main Text: Updated to UHub (title case) --><h1>UHub</h1>
+    <div id="background-waves"></div>
+    <h1>UHub</h1>
 
     <a href="https://drive.google.com/file/d/1TF0XHMVjryS41FZJ2pZ0X2BXHaAKlmsL/view?usp=sharing"
         class="main-button"
         target="_blank"
         rel="noopener noreferrer">
-        <!-- Button Text: Download UHub for Android -->Download UHub for Android
+        Download UHub for Android
     </a>
 
-    <!-- Footer container for structured text --><div class="footer-container">
-        <!-- Original Footer Subtext --><p class="footer-text">Made By Aly Tamer</p>
-        
-        <!-- New Contact Link --><p class="contact-text">
+    <div class="footer-container">
+        <p class="footer-text">Made By Aly Tamer</p>
+        <p class="contact-text">
             Contact me: 
             <a href="mailto:aly.t.elenany@gmail.com" class="contact-link">aly.t.elenany@gmail.com</a>
         </p>
-
-        <!-- New Disclaimer Text --><p class="disclaimer-text">not affiliated with the GUC, this is a passion project.</p>
+        <p class="disclaimer-text">not affiliated with the GUC, this is a passion project.</p>
     </div>
 </body>
 </html>
