@@ -1,147 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UHub for Android</title>
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background-color: #000000;
-      color: #E0E0E0;
-      text-align: center;
-      overflow: hidden;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UHub for Android</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #000000;
+      color: #E0E0E0;
+      text-align: center;
+      overflow-x: hidden; /* Prevent horizontal scrollbar on body */
+    }
+
+    /* Brighter, visible purple-blue waves */
+    #background-waves {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.6;
+      background:
+        radial-gradient(circle at 70% 30%, rgba(115, 0, 255, 0.8) 5%, transparent 25%),
+        radial-gradient(circle at 30% 80%, rgba(0, 120, 255, 0.7) 5%, transparent 25%),
+        radial-gradient(circle at 80% 60%, rgba(255, 0, 150, 0.5) 5%, transparent 25%),
+        linear-gradient(160deg, #0a0a0a, #000000, #050505);
+      background-size: 400% 400%;
+      animation: flowWaves 30s ease-in-out infinite;
+    }
+
+    @keyframes flowWaves {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 100%; }
+    }
+
+    /* Title with original multi-color gradient */
+    h1 {
+      margin-bottom: 30px; /* Reduced margin to make room for carousel */
+      font-size: 5em;
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, #6200EE, #FF4081, #2196F3, #F44336);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: #BB86FC;
+      text-shadow: 0 0 30px rgba(98, 0, 238, 0.4);
+    }
+
+    .main-button {
+      display: inline-block;
+      padding: 25px 50px;
+      font-size: 1.6em;
+      font-weight: bold;
+      text-decoration: none;
+      color: white;
+      background-color: #6200EE;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 15px rgba(187, 134, 252, 0.3);
+      z-index: 1;
+      margin-top: 30px; /* Space above button */
+    }
+
+    .main-button:hover {
+      background-color: #9857FF;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(187, 134, 252, 0.5);
+    }
+
+    .main-button:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
+    }
+
+    /* --- NEW CAROUSEL STYLES --- */
+    .carousel-container {
+        width: 90vw; /* Use viewport width for responsive sizing */
+        max-width: 400px; /* Keep it phone-sized */
+        margin: 30px 0 0 0;
+        
+        overflow-x: scroll; 
+        overflow-y: hidden;
+        
+        /* Optional: Hide the scrollbar for a cleaner look */
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        background-color: #1a1a1a;
     }
 
-    /* Brighter, visible purple-blue waves */
-    #background-waves {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 0.6;
-      background:
-        radial-gradient(circle at 70% 30%, rgba(115, 0, 255, 0.8) 5%, transparent 25%),
-        radial-gradient(circle at 30% 80%, rgba(0, 120, 255, 0.7) 5%, transparent 25%),
-        radial-gradient(circle at 80% 60%, rgba(255, 0, 150, 0.5) 5%, transparent 25%),
-        linear-gradient(160deg, #0a0a0a, #000000, #050505);
-      background-size: 400% 400%;
-      animation: flowWaves 30s ease-in-out infinite;
+    .carousel-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
     }
 
-    @keyframes flowWaves {
-      0% { background-position: 0% 0%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 100%; }
+    .carousel-track {
+        display: flex;
+        /* The magic for swiping/snapping */
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch; /* for smooth mobile scrolling */
+        height: auto; /* Allow content to define height */
     }
 
-    /* Title with original multi-color gradient */
-    h1 {
-      margin-bottom: 50px;
-      font-size: 5em;
-      letter-spacing: 3px;
-      background: linear-gradient(135deg, #6200EE, #FF4081, #2196F3, #F44336);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: #BB86FC;
-      text-shadow: 0 0 30px rgba(98, 0, 238, 0.4);
+    .carousel-slide {
+        flex-shrink: 0;
+        width: 100%;
+        height: auto; 
+        scroll-snap-align: start;
     }
 
-    .main-button {
-      display: inline-block;
-      padding: 25px 50px;
-      font-size: 1.6em;
-      font-weight: bold;
-      text-decoration: none;
-      color: white;
-      background-color: #6200EE;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
-      box-shadow: 0 8px 15px rgba(187, 134, 252, 0.3);
-      z-index: 1;
+    .carousel-slide img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* Remove border-radius here, it should be on the container */
     }
+    /* --- END CAROUSEL STYLES --- */
 
-    .main-button:hover {
-      background-color: #9857FF;
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(187, 134, 252, 0.5);
-    }
+    .footer-container {
+      margin-top: 50px;
+      color: #888888;
+      font-size: 1.1em;
+      font-weight: 500;
+    }
 
-    .main-button:active {
-      transform: translateY(0);
-      box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
-    }
+    .footer-text { margin: 0; }
 
-    .footer-container {
-      margin-top: 50px;
-      color: #888888;
-      font-size: 1.1em;
-      font-weight: 500;
-    }
+    .contact-text {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #888888;
+    }
 
-    .footer-text { margin: 0; }
+    .contact-link {
+      color: #BB86FC;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
 
-    .contact-text {
-      margin-top: 10px;
-      font-size: 0.9em;
-      color: #888888;
-    }
+    .contact-link:hover {
+      color: #9857FF;
+      text-decoration: underline;
+    }
 
-    .contact-link {
-      color: #BB86FC;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .contact-link:hover {
-      color: #9857FF;
-      text-decoration: underline;
-    }
-
-    .disclaimer-text {
-      margin-top: 5px;
-      font-size: 0.8em;
-      color: #666666;
-    }
-  </style>
+    .disclaimer-text {
+      margin-top: 5px;
+      font-size: 0.8em;
+      color: #666666;
+    }
+  </style>
 </head>
 <body>
-  <div id="background-waves"></div>
-  <h1>UHub</h1>
+  <div id="background-waves"></div>
+  <h1>UHub</h1>
 
-  <!-- Use direct download URL format below -->
- <a
-  href="https://github.com/AlyTamer/UHub/releases/download/1.5/uhub.v1.5.apk"
-  class="main-button"
-  download
+    <div class="carousel-container">
+    <div class="carousel-track">
+      <div class="carousel-slide"><img src="1.jpg" alt="UHub Screenshot 1" /></div>
+      <div class="carousel-slide"><img src="2.jpg" alt="UHub Screenshot 2" /></div>
+      <div class="carousel-slide"><img src="3.jpg" alt="UHub Screenshot 3" /></div>
+      <div class="carousel-slide"><img src="4.jpg" alt="UHub Screenshot 4" /></div>
+      <div class="carousel-slide"><img src="5.jpg" alt="UHub Screenshot 5" /></div>
+      <div class="carousel-slide"><img src="6.jpg" alt="UHub Screenshot 6" /></div>
+      <div class="carousel-slide"><img src="7.jpg" alt="UHub Screenshot 7" /></div>
+      <div class="carousel-slide"><img src="8.jpg" alt="UHub Screenshot 8" /></div>
+      <div class="carousel-slide"><img src="9.jpg" alt="UHub Screenshot 9" /></div>
+      <div class="carousel-slide"><img src="10.jpg" alt="UHub Screenshot 10" /></div>
+    </div>
+  </div>
+     <a
+  href="https://github.com/AlyTamer/UHub/releases/download/1.5.1/uhub.v1.5.1.apk"
+  class="main-button"
+  download
 >
-  Download UHub for Android
+  Download UHub for Android
 </a>
 
 
-  <div class="footer-container">
-    <p class="footer-text">Current Version: 1.5</p>
-    <p class="footer-text">Made By Aly ElAnany</p>
-    <p class="contact-text">
-      Contact me:
-      <a href="mailto:aly.t.elenany@gmail.com" class="contact-link"
-        >aly.t.elenany@gmail.com</a
-      >
-    </p>
-    <p class="disclaimer-text">
-      not affiliated with the GUC, this is a passion project.
-    </p>
-  </div>
+  <div class="footer-container">
+    <p class="footer-text">Current Version: 1.5.1</p>
+    <p class="footer-text">Made By Aly ElAnany</p>
+    <p class="contact-text">
+      Contact me:
+      <a href="mailto:aly.t.elenany@gmail.com" class="contact-link"
+        >aly.t.elenany@gmail.com</a
+      >
+    </p>
+    <p class="disclaimer-text">
+      not affiliated with the GUC, this is a passion project.
+    </p>
+  </div>
 </body>
 </html>
