@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UHub for Android</title>
   <style>
+    /* --- GLOBAL --- */
     body {
       font-family: 'Inter', sans-serif;
       display: flex;
@@ -19,16 +20,6 @@
       overflow: hidden;
     }
 
-    .main-content-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow-y: auto;
-      width: 100%;
-      max-width: 100vw;
-      padding-bottom: 40px;
-    }
-
     /* --- BACKGROUND WAVES --- */
     #background-waves {
       position: fixed;
@@ -36,8 +27,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
-      opacity: 0.6;
+      z-index: -3;
+      opacity: 0.5;
       background:
         radial-gradient(circle at 70% 30%, rgba(115, 0, 255, 0.8) 5%, transparent 25%),
         radial-gradient(circle at 30% 80%, rgba(0, 120, 255, 0.7) 5%, transparent 25%),
@@ -53,9 +44,47 @@
       100% { background-position: 0% 100%; }
     }
 
-    /* --- TITLE --- */
+    /* --- BACKGROUND SCREENSHOTS (NEW) --- */
+    #background-screenshots {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      filter: blur(15px) brightness(0.4);
+      opacity: 0.6;
+    }
+
+    #background-screenshots img {
+      position: absolute;
+      width: auto;
+      height: 100%;
+      max-height: 110vh;
+      object-fit: contain;
+      transition: opacity 1s ease-in-out;
+      opacity: 0;
+    }
+
+    #background-screenshots img.active {
+      opacity: 1;
+    }
+
+    /* --- CONTENT --- */
+    .main-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 1;
+    }
+
     h1 {
-      margin: 25px 0 20px 0;
+      margin: 25px 0;
       font-size: 5em;
       letter-spacing: 3px;
       background: linear-gradient(135deg, #6200EE, #FF4081, #2196F3, #F44336);
@@ -65,36 +94,6 @@
       text-shadow: 0 0 30px rgba(98, 0, 238, 0.4);
     }
 
-    /* --- CAROUSEL --- */
-    .carousel-container {
-      width: 90vw;
-      max-width: 400px;
-      margin: 20px 0 10px 0;
-      overflow: hidden;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-      background-color: #1a1a1a;
-    }
-
-    .carousel-track {
-      display: flex;
-      transition: transform 0.7s ease-in-out;
-    }
-
-    .carousel-slide {
-      min-width: 100%;
-      scroll-snap-align: center;
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: 300px; /* Scaled down */
-      object-fit: cover; /* Keeps proper aspect ratio */
-      border-radius: 15px;
-      display: block;
-    }
-
-    /* --- BUTTON --- */
     .main-button {
       display: inline-block;
       padding: 20px 45px;
@@ -116,12 +115,6 @@
       box-shadow: 0 10px 25px rgba(187, 134, 252, 0.5);
     }
 
-    .main-button:active {
-      transform: translateY(0);
-      box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
-    }
-
-    /* --- FOOTER --- */
     .footer-container {
       margin-top: 40px;
       color: #888;
@@ -158,23 +151,22 @@
 <body>
   <div id="background-waves"></div>
 
+  <!-- NEW BACKGROUND CAROUSEL OF SCREENSHOTS -->
+  <div id="background-screenshots">
+    <img src="1.jpg" class="active" alt="Screenshot 1">
+    <img src="2.jpg" alt="Screenshot 2">
+    <img src="3.jpg" alt="Screenshot 3">
+    <img src="4.jpg" alt="Screenshot 4">
+    <img src="5.jpg" alt="Screenshot 5">
+    <img src="6.jpg" alt="Screenshot 6">
+    <img src="7.jpg" alt="Screenshot 7">
+    <img src="8.jpg" alt="Screenshot 8">
+    <img src="9.jpg" alt="Screenshot 9">
+    <img src="10.jpg" alt="Screenshot 10">
+  </div>
+
   <div class="main-content-wrapper">
     <h1>UHub</h1>
-
-    <div class="carousel-container">
-      <div class="carousel-track" id="carousel-track">
-        <div class="carousel-slide"><img src="1.jpg" alt="Screenshot 1" /></div>
-        <div class="carousel-slide"><img src="2.jpg" alt="Screenshot 2" /></div>
-        <div class="carousel-slide"><img src="3.jpg" alt="Screenshot 3" /></div>
-        <div class="carousel-slide"><img src="4.jpg" alt="Screenshot 4" /></div>
-        <div class="carousel-slide"><img src="5.jpg" alt="Screenshot 5" /></div>
-        <div class="carousel-slide"><img src="6.jpg" alt="Screenshot 6" /></div>
-        <div class="carousel-slide"><img src="7.jpg" alt="Screenshot 7" /></div>
-        <div class="carousel-slide"><img src="8.jpg" alt="Screenshot 8" /></div>
-        <div class="carousel-slide"><img src="9.jpg" alt="Screenshot 9" /></div>
-        <div class="carousel-slide"><img src="10.jpg" alt="Screenshot 10" /></div>
-      </div>
-    </div>
 
     <a
       href="https://github.com/AlyTamer/UHub/releases/download/1.5.1/uhub.v1.5.1.apk"
@@ -198,18 +190,17 @@
   </div>
 
   <script>
-    // --- AUTO CYCLING CAROUSEL ---
-    const track = document.getElementById("carousel-track");
-    const slides = document.querySelectorAll(".carousel-slide");
-    let index = 0;
+    // --- BACKGROUND CAROUSEL LOGIC ---
+    const bgImages = document.querySelectorAll('#background-screenshots img');
+    let bgIndex = 0;
 
-    function nextSlide() {
-      index = (index + 1) % slides.length;
-      track.style.transform = `translateX(-${index * 100}%)`;
+    function cycleBackground() {
+      bgImages[bgIndex].classList.remove('active');
+      bgIndex = (bgIndex + 1) % bgImages.length;
+      bgImages[bgIndex].classList.add('active');
     }
 
-    // Auto-scroll every 3 seconds
-    setInterval(nextSlide, 3000);
+    setInterval(cycleBackground, 4000); // change every 4s
   </script>
 </body>
 </html>
