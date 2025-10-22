@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UHub for Android</title>
   <style>
-    /* --- GLOBAL LAYOUT --- */
     body {
       font-family: 'Inter', sans-serif;
       display: flex;
@@ -56,7 +55,7 @@
 
     /* --- TITLE --- */
     h1 {
-      margin: 30px 0;
+      margin: 25px 0 20px 0;
       font-size: 5em;
       letter-spacing: 3px;
       background: linear-gradient(135deg, #6200EE, #FF4081, #2196F3, #F44336);
@@ -66,11 +65,40 @@
       text-shadow: 0 0 30px rgba(98, 0, 238, 0.4);
     }
 
+    /* --- CAROUSEL --- */
+    .carousel-container {
+      width: 90vw;
+      max-width: 400px;
+      margin: 20px 0 10px 0;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      background-color: #1a1a1a;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.7s ease-in-out;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      scroll-snap-align: center;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 300px; /* Scaled down */
+      object-fit: cover; /* Keeps proper aspect ratio */
+      border-radius: 15px;
+      display: block;
+    }
+
     /* --- BUTTON --- */
     .main-button {
       display: inline-block;
-      padding: 25px 50px;
-      font-size: 1.6em;
+      padding: 20px 45px;
+      font-size: 1.4em;
       font-weight: bold;
       text-decoration: none;
       color: white;
@@ -79,7 +107,7 @@
       cursor: pointer;
       transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
       box-shadow: 0 8px 15px rgba(187, 134, 252, 0.3);
-      margin-top: 30px;
+      margin-top: 25px;
     }
 
     .main-button:hover {
@@ -93,47 +121,9 @@
       box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
     }
 
-    /* --- CAROUSEL --- */
-    .carousel-container {
-      width: 90vw;
-      max-width: 400px;
-      margin: 30px 0;
-      overflow-x: scroll;
-      overflow-y: hidden;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-      background-color: #1a1a1a;
-    }
-
-    .carousel-container::-webkit-scrollbar {
-      display: none;
-    }
-
-    .carousel-track {
-      display: flex;
-      scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .carousel-slide {
-      flex-shrink: 0;
-      width: 100%;
-      scroll-snap-align: center;
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 20px;
-    }
-
     /* --- FOOTER --- */
     .footer-container {
-      margin-top: 50px;
+      margin-top: 40px;
       color: #888;
       font-size: 1.1em;
       font-weight: 500;
@@ -172,7 +162,7 @@
     <h1>UHub</h1>
 
     <div class="carousel-container">
-      <div class="carousel-track">
+      <div class="carousel-track" id="carousel-track">
         <div class="carousel-slide"><img src="1.jpg" alt="Screenshot 1" /></div>
         <div class="carousel-slide"><img src="2.jpg" alt="Screenshot 2" /></div>
         <div class="carousel-slide"><img src="3.jpg" alt="Screenshot 3" /></div>
@@ -206,5 +196,20 @@
       </p>
     </div>
   </div>
+
+  <script>
+    // --- AUTO CYCLING CAROUSEL ---
+    const track = document.getElementById("carousel-track");
+    const slides = document.querySelectorAll(".carousel-slide");
+    let index = 0;
+
+    function nextSlide() {
+      index = (index + 1) % slides.length;
+      track.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    // Auto-scroll every 3 seconds
+    setInterval(nextSlide, 3000);
+  </script>
 </body>
 </html>
