@@ -1,4 +1,5 @@
 {
-  "version": "1.4",
-  "download_url": "https://github.com/AlyTamer/UHub/releases/download/1.4/uhub.v1.4.apk"
+  "version": "1.5",
+  "download_url": "https://github.com/AlyTamer/UHub/releases/download/1.5/uhub.v1.5.apk",
+  "changelog": "•Improved exam notifications\n• Fixed intro screen\n•Fixed Major Bug in Schedule"
 }
