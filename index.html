@@ -44,7 +44,7 @@
       100% { background-position: 0% 100%; }
     }
 
-    /* --- BACKGROUND SCREENSHOTS (NEW) --- */
+    /* --- BACKGROUND SCREENSHOTS --- */
     #background-screenshots {
       position: fixed;
       top: 0;
@@ -56,8 +56,18 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      filter: blur(15px) brightness(0.4);
-      opacity: 0.6;
+      filter: blur(10px) brightness(0.9) saturate(1.2);
+      opacity: 0.9;
+    }
+
+    #background-screenshots::after {
+      /* subtle white gradient overlay to make dark images visible */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.25), rgba(0,0,0,0.7));
+      mix-blend-mode: screen;
+      pointer-events: none;
     }
 
     #background-screenshots img {
@@ -151,7 +161,7 @@
 <body>
   <div id="background-waves"></div>
 
-  <!-- NEW BACKGROUND CAROUSEL OF SCREENSHOTS -->
+  <!-- Background Screenshots -->
   <div id="background-screenshots">
     <img src="1.jpg" class="active" alt="Screenshot 1">
     <img src="2.jpg" alt="Screenshot 2">
