@@ -1,5 +1,5 @@
 {
-  "version": "1.6",
-  "download_url": "https://github.com/AlyTamer/UHub/releases/download/1.6/uhub.v1.6.apk",
-  "changelog": "•Fixed UI breaking on devices with Larger screens\n•Fixed UI breaking on devices with Smaller screens\n•Mini redesign to better accomodate the fit and feel of the app across multiple devices"
+  "version": "1.7",
+  "download_url": "https://github.com/AlyTamer/UHub/releases/download/1.7/uhub.v1.7.apk",
+  "changelog": "•Fixed Broken MailBox\n•Fixed UI Clipping Inside MailBox\n•Better Visual Clarity for Upcoming/Finished Exams"
 }
