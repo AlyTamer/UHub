@@ -1,5 +1,5 @@
 {
-  "version": "1.7",
-  "download_url": "https://github.com/AlyTamer/UHub/releases/download/1.7/uhub.v1.7.apk",
-  "changelog": "•Fixed Broken MailBox\n•Fixed UI Clipping Inside MailBox\n•Better Visual Clarity for Upcoming/Finished Exams"
+  "version": "1.8",
+  "download_url": "https://github.com/AlyTamer/UHub/releases/download/1.8/uhub.v1.8.apk",
+  "changelog": "•Added Midterm grades screen in the [ Grades ] section of the app\n•Added ability to notify user of a password change with the necessary steps to change it without logging out or losing data\n•Added a yellow barrier to the upcoming exams\n•Fixed Colors not being clear and legible on Light mode\n•Fixed Exams being red on their day instead of green"
 }
