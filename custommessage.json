@@ -3,5 +3,5 @@
   "title": "Test notification22",
   "body": "Testing message systm",
   "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  "enabled": true                   
+  "enabled": false                   
 }
