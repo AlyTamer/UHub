@@ -1,8 +1,8 @@
+// json
 {
-  "id": "2026-04-28-v1",
-  "title": "Maintenance Notice",
-  "body": "The portal will undergo maintenance tonight from 23:00 to 02:00 UTC. Some features may be unavailable.",
-  "link": "https://alytamer.github.io/UHub/maintenance-details.html",
-  "start": "2026-04-28T00:00:00Z",
-  "end": "2026-05-02T00:00:00Z"
+  "id": "2026-05-01-v1",           
+  "title": "Test notification",
+  "body": "Testing message systm",
+  "link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "enabled": true                   
 }
