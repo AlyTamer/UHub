@@ -1,7 +1,8 @@
 {
-  "id": "2026-04-28-v1",           
-  "title": "Critical App Update",
-  "body": "Please head over to the playstore or click open link to update the app ASAP. The update fixes some major bugs that hinder UHub's performance",
+  "id": "2026-05-4-v1",           
+  "title": "New Update Released!",
+  "body": "Version 2.0.2 just released! Bringing some bug fixes and faster load times. Press Open link to go directly to the playstore",
   "link": "https://play.google.com/store/apps/details?id=com.alyelanany.uni_portal_app",
-  "enabled": false              
+  "enabled": true,
+  "version":"-2.0.2"
 }
