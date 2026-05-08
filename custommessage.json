@@ -3,6 +3,6 @@
   "title": "Important Update Released!",
   "body": "Version 2.1.0 is out. Please update the app to fix CRITICAL ISSUES such as cms not loading requiring user to logout and log back in",
   "link": "https://play.google.com/store/apps/details?id=com.alyelanany.uni_portal_app",
-  "enabled": true,
+  "enabled": false,
   "version":"-2.1.0"
 }
