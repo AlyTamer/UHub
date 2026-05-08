@@ -1,8 +1,8 @@
 {
-  "id": "2026-05-4-v1",           
-  "title": "New Update Released!",
-  "body": "Version 2.0.2 just released! Bringing some bug fixes and faster load times. Press Open link to go directly to the playstore",
+  "id": "2026-05-8-v1",           
+  "title": "Important Update Released!",
+  "body": "Version 2.1.0 is out. Please update the app to fix CRITICAL ISSUES such as cms not loading requiring user to logout and log back in",
   "link": "https://play.google.com/store/apps/details?id=com.alyelanany.uni_portal_app",
   "enabled": true,
-  "version":"-2.0.2"
+  "version":"-2.1.0"
 }
