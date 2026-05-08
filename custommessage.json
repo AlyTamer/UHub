@@ -1,8 +1,8 @@
 {
-  "id": "2026-05-8-v2",           
-  "title": "Important Update Released!",
-  "body": "Version 2.1.0 is out. Please update the app to fix CRITICAL ISSUES such as cms not loading requiring user to logout and log back in",
+  "id": "2026-05-8-v3",           
+  "title": "! CMS/GRADE ISSUE !",
+  "body": "IF you experience issues with downloading after updating then please LOGOUT & LOGBACK in. Your Saved cms files will not be deleted, once you go to open an old file it opens without redownloading. This is a GUC server issue, after logging back in it should hopefully never happen again. If you are not on the latest version please update by pressing Open Link.",
   "link": "https://play.google.com/store/apps/details?id=com.alyelanany.uni_portal_app",
   "enabled": true,
-  "version":"-2.1.1"
+  "version":"all"
 }
