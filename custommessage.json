@@ -3,6 +3,6 @@
   "title": "! Critical Server Issue Fix !",
   "body": "For those still encountering issues with Server errors, an update has been released to fix the GUC Server issue. Please update to version 2.1.2. You can press Open Link to go to the playstore and update.",
   "link": "https://play.google.com/store/apps/details?id=com.alyelanany.uni_portal_app",
-  "enabled": true,
+  "enabled": false,
   "version":"-2.1.2"
 }
