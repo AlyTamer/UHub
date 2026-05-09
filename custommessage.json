@@ -1,8 +1,8 @@
 {
-  "id": "2026-05-8-v3",           
-  "title": "! CMS/GRADE ISSUE !",
-  "body": "IF you experience issues with downloading after updating then please LOGOUT & LOGBACK in. Your Saved cms files will not be deleted, once you go to open an old file it opens without redownloading. This is a GUC server issue, after logging back in it should hopefully never happen again. If you are not on the latest version please update by pressing Open Link.",
+  "id": "2026-05-9-v1",           
+  "title": "! Critical Server Issue Fix !",
+  "body": "For those still encountering issues with Server errors, an update has been released to fix the GUC Server issue. Please update to version 2.1.2. You can press Open Link to go to the playstore and update.",
   "link": "https://play.google.com/store/apps/details?id=com.alyelanany.uni_portal_app",
   "enabled": true,
-  "version":"all"
+  "version":"-2.1.2"
 }
