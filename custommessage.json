@@ -1,8 +1,8 @@
 {
-  "id": "2026-05-11-v1",           
-  "title": "! Critical Server Issue Fix !",
-  "body": "For those still encountering issues with Server errors, an update has been released to fix the GUC Server issue. Please update to version 2.1.4. You can press Open Link to go to the playstore and update.",
+  "id": "2026-05-19-v1",           
+  "title": "Enjoying the app?",
+  "body": "If you find yourself using the app a lot, please support UHub by leaving a small review on the play store. You can do so through pressing open link below 👇. All reviews are appreciated 🫡",
   "link": "https://play.google.com/store/apps/details?id=com.alyelanany.uni_portal_app",
   "enabled": true,
-  "version":"-2.1.4"
+  "version":"all"
 }
