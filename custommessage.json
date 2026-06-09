@@ -1,8 +1,8 @@
 {
-  "id": "2026-05-19-v1",           
-  "title": "Enjoying the app?",
-  "body": "If you find yourself using the app a lot, please support UHub by leaving a small review on the play store. You can do so through pressing open link below 👇. All reviews are appreciated 🫡",
-  "link": "https://play.google.com/store/apps/details?id=com.alyelanany.uni_portal_app",
+  "id": "2026-06-09-v1",           
+  "title": "Notification Issue",
+  "body": "It has come to my attention that there is an issue with the notifications of the app. The issue will be fixed soon.",
+  "link": null,
   "enabled": true,
   "version":"all"
 }
