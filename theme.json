@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "enabled": true,
+  "enabled": false,
   "season": "easter",
   "variant": "classic",
   "corners": true,
