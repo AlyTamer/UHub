@@ -1,0 +1,66 @@
+name: Update rooms
+
+on:
+  schedule:
+    - cron: '17 1 * * 5' # Friday 01:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: room-collection
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r scripts/requirements.txt
+      - name: Test collector
+        run: python -m unittest discover -s tests -p 'test_room*.py' -v
+      - name: Collect room occupancy
+        env:
+          GUC_USERNAME: ${{ secrets.GUC_USERNAME }}
+          GUC_PASSWORD: ${{ secrets.GUC_PASSWORD }}
+        run: python scripts/collect_rooms.py --output rooms.json
+      - name: Save complete snapshot
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- rooms.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update weekly room availability [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Summarize
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          data = json.loads(Path('rooms.json').read_text())
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(f"Collected {len(data['rooms'])} rooms from {data['courseCount']} courses.\n\n")
+              summary.write(f"Snapshot: {data['updatedAt']}\n")
+          PY
+
+  publish:
+    needs: collect
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/publish-pages.yml
