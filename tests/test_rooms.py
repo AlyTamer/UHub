@@ -31,6 +31,23 @@ FORM = '''<form id="form1"><input type="hidden" name="__VIEWSTATE" value="state"
 
 
 class CollectorTests(unittest.TestCase):
+    def test_other_rooms_are_preserved_with_occupancy(self):
+        self.assertEqual(collector.rooms_in('G.206 / N/A / Workshop / A1.101-PD / H21'),
+                         {'G.206', 'WORKSHOP', 'A1.101', 'H21'})
+        busy = collector.parse_schedule(page({'Tuesday/4': entry('G.206 / Workshop')}))
+        self.assertEqual(busy['Tuesday/4'], {'G.206', 'WORKSHOP'})
+
+    def test_saturday_is_preserved_and_friday_is_ignored(self):
+        friday = '<tr><th>Friday</th>' + ''.join(
+            f'<td>{entry("D9.999")}</td>' for _ in range(8)
+        ) + '</tr>'
+        source = page({'Saturday/1': entry('B2.101')}).replace('</table>', friday + '</table>')
+        busy = collector.parse_schedule(source)
+        self.assertEqual(len(busy), 48)
+        self.assertEqual(busy['Saturday/1'], {'B2.101'})
+        self.assertFalse(any(key.startswith('Friday/') for key in busy))
+        self.assertNotIn('D9.999', set().union(*busy.values()))
+
     def test_shared_flutter_schema_fixture(self):
         fixture = json.loads((Path(__file__).parent / 'fixtures' / 'room_snapshot.json').read_text())
         busy = collector.parse_schedule(page({'Tuesday/4': entry('G.206 / D2.301-PD / H20')}))
@@ -42,8 +59,8 @@ class CollectorTests(unittest.TestCase):
             self.assertEqual(collector.username(value), 'alice.test')
 
     def test_rooms_and_ignored_locations(self):
-        self.assertEqual(collector.rooms_in('G.206 / B2.101 / D2.301-PD / H20'), {'B2.101', 'D2.301', 'H20'})
-        for value in ['G.206', 'A.101', 'A0.101', 'H21', 'H100', 'TBA', '']:
+        self.assertEqual(collector.rooms_in('G.206 / B2.101 / D2.301-PD / H20'), {'G.206', 'B2.101', 'D2.301', 'H20'})
+        for value in ['TBA', 'N/A', '']:
             self.assertEqual(collector.rooms_in(value), set())
         for building in 'ABCD':
             for number in range(1, 10):
@@ -61,13 +78,13 @@ class CollectorTests(unittest.TestCase):
                 collector.course_ids(source)
 
     def test_schedule_and_complete_schema(self):
-        busy = collector.parse_schedule(page({'Tuesday/4': entry('G.206 / D2.301-PD'), 'Friday/8': entry('H20')}))
-        self.assertEqual(len(busy), 56)
-        self.assertEqual(busy['Tuesday/4'], {'D2.301'})
-        self.assertEqual(busy['Friday/8'], {'H20'})
+        busy = collector.parse_schedule(page({'Tuesday/4': entry('G.206 / D2.301-PD'), 'Saturday/8': entry('H20')}))
+        self.assertEqual(len(busy), 48)
+        self.assertEqual(busy['Tuesday/4'], {'G.206', 'D2.301'})
+        self.assertEqual(busy['Saturday/8'], {'H20'})
         self.assertEqual(busy['Saturday/1'], set())
         with self.assertRaises(collector.CollectionError):
-            collector.parse_schedule(page().replace('<th>Friday</th>', '<th>Other</th>'))
+            collector.parse_schedule(page().replace('<th>Saturday</th>', '<th>Other</th>'))
         with self.assertRaises(collector.CollectionError):
             collector.parse_schedule(page({'Tuesday/4': 'Unknown markup'}))
 
@@ -77,8 +94,8 @@ class CollectorTests(unittest.TestCase):
         with patch.object(collector, 'request_page', side_effect=responses):
             snapshot = collector.collect(object(), delay=0)
         self.assertEqual(snapshot['courseCount'], 2)
-        self.assertEqual(snapshot['rooms'], ['D2.301', 'H20'])
-        self.assertEqual(snapshot['busy']['Tuesday/4'], ['D2.301', 'H20'])
+        self.assertEqual(snapshot['rooms'], ['D2.301', 'G.206', 'H20'])
+        self.assertEqual(snapshot['busy']['Tuesday/4'], ['D2.301', 'G.206', 'H20'])
         self.assertEqual(set(snapshot), {'version', 'updatedAt', 'courseCount', 'rooms', 'busy'})
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / 'rooms.json'
