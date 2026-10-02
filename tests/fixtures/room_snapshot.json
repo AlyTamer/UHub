@@ -4,6 +4,7 @@
   "courseCount": 2,
   "rooms": [
     "D2.301",
+    "G.206",
     "H20"
   ],
   "busy": {
@@ -36,6 +37,7 @@
     "Tuesday/3": [],
     "Tuesday/4": [
       "D2.301",
+      "G.206",
       "H20"
     ],
     "Tuesday/5": [],
@@ -57,14 +59,6 @@
     "Thursday/5": [],
     "Thursday/6": [],
     "Thursday/7": [],
-    "Thursday/8": [],
-    "Friday/1": [],
-    "Friday/2": [],
-    "Friday/3": [],
-    "Friday/4": [],
-    "Friday/5": [],
-    "Friday/6": [],
-    "Friday/7": [],
-    "Friday/8": []
+    "Thursday/8": []
   }
 }
