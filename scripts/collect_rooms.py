@@ -18,8 +18,7 @@ from requests_ntlm import HttpNtlmAuth
 URL = 'https://apps.guc.edu.eg/student_ext/Scheduling/SearchAcademicScheduled_001.aspx'
 TABLE = 'ContentPlaceHolderright_ContentPlaceHoldercontent_schedule'
 BUTTON = 'ctl00$ctl00$ContentPlaceHolderright$ContentPlaceHoldercontent$B_ShowSchedule'
-DAYS = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-ROOM = re.compile(r'\b(?:[A-D]\s*[1-9]\s*\.\s*\d{3}|H\s*(?:20|1\d|[1-9]))(?!\d)')
+DAYS = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday']
 
 
 class CollectionError(Exception):
@@ -31,8 +30,22 @@ def username(raw: str) -> str:
 
 
 def rooms_in(location: str) -> set[str]:
-    return {re.sub(r'\s+', '', m.group()) for m in ROOM.finditer(location.upper())}
-
+    text = re.sub(r'\s+', ' ', location.upper()).strip()
+    placeholders = {'', '-', '--', 'N/A', 'NA', 'TBA', 'TBD', 'NONE', 'NULL', 'NOT ASSIGNED'}
+    if text in placeholders:
+        return set()
+    pattern = re.compile(r'\b(?:[A-Z]\s*\d*\s*\.\s*\d{3}|H\s*\d+)(?!\d)')
+    rooms = set()
+    for part in re.split(r'[,;/&+|]+', re.sub(r'\bN/A\b', '', text)):
+        part = part.strip()
+        if part in placeholders:
+            continue
+        matches = list(pattern.finditer(part))
+        if matches:
+            rooms.update(re.sub(r'\s+', '', match.group()) for match in matches)
+        else:
+            rooms.add(part)
+    return rooms
 
 def course_ids(source: str) -> list[str]:
     match = re.search(r'\bcourses\s*=\s*(\[[\s\S]*?\])\s*[,;]\s*(?:(?:var|let|const)\s+)?tas\s*=', source)
@@ -95,7 +108,7 @@ def parse_schedule(source: str) -> dict[str, set[str]]:
                 if not locations:
                     raise CollectionError(f'{day} slot {slot}: missing location field.')
                 for location in locations:
-                    # G.206, TBA, etc. contribute nothing; suffixes are discarded.
+                    # Preserve other rooms; discard suffixes and unassigned placeholders.
                     rooms.update(rooms_in(location))
             occupied[f'{day}/{slot}'] = rooms
     if days_seen != set(DAYS):
@@ -154,7 +167,7 @@ def collect(session, delay: float = 0.25) -> dict:
             time.sleep(delay)
     rooms = set().union(*busy.values())
     if not rooms:
-        raise CollectionError('No supported rooms found; refusing to replace the published snapshot.')
+        raise CollectionError('No rooms found; refusing to replace the published snapshot.')
     return {
         'version': 1,
         'updatedAt': datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z'),
