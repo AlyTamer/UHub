@@ -1,4 +1,1 @@
-{
-  "version": 1,
-  "usernames": []
-}
+{"version":2,"algorithm":"AES-256-GCM","nonce":"Op0M56iM+DtYcCeN","ciphertext":"IJYPOYBPBu8tkb8z20KSkOyCF3AqDqZNuZFZZpIm0JTPeixUvjB01ykIsBok0AeDAylJhdz4ghJMTBh0J/6i","mac":"fMSHJnjxNwjE+I4J8f6ZYA=="}
